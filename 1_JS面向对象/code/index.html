@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title></title>
+    <style>
+        .box {
+            width: 320px;
+            height: 500px;
+            background-color: pink;
+        }
+    </style>
+  </head>
+  <body>
+      
+      <div class="box"></div>
+    
+    <script>
+    
+        window.onload=function () {
+            var box=document.querySelector('.box');
+            var bindSwipeEvent=function (dom,fn) {
+                var startDate=null;
+                var bolMove=false;
+                dom.addEventListener('touchstart',function (e) {
+                    /*开始触摸*/
+                    startDate=Date.now();
+                });
+                dom.addEventListener('touchmove',function (e) {
+                    /*触摸移动*/
+                    bolMove=true;
+                });
+                dom.addEventListener('touchend',function (e) {
+                    /* 因为是手指点击，所以速度会快，并且没有触摸的事件产生 */
+                    if ((Date.now()-startDate) <150 && !bolMove) {
+                        fn && fn.call(this,e)
+                    }
+                    bolMove=false;
+                    startDate=null;
+                });
+
+            }
+            bindSwipeEvent(box,function (e) {
+                console.log(this);
+                console.log(e);
+            });
+        }
+    
+    </script>
+  </body>
+</html>

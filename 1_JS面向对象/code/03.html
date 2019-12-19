@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      console.log(window);
+
+      // ====================================================
+
+      // function Foo(name) {
+      //   this.name = name;
+      // }
+      // Foo.prototype.name = "hi";
+      // Object.prototype.name = "niHao";
+      // Foo.prototype.showName = function() {
+      //   console.log(this.name);
+      // };
+
+      // var obj = new Foo("hello");
+      // console.log(obj.name);
+      // console.log(obj);
+
+      // ====================================================
+
+      function Foo() {
+        this.name = "hello";
+      }
+
+      Foo.prototype.showName = function() {
+        console.log(this.name);
+      };
+      // 子类
+      function Bar() {
+        Foo.call(this);
+        this.age = 20;
+      }
+      extend(Foo, Bar);
+      Bar.prototype.showAge = function() {
+        console.log(this.age);
+      };
+
+      function extend(parent, child) {
+        // for (var attr in parent.prototype) {
+        //   child.prototype[attr] = parent.prototype[attr];
+        // }
+
+        var F = function() {};
+        F.prototype = parent.prototype;
+        child.prototype = new F();
+        child.prototype.constructor = child;
+      }
+
+      var obj1 = new Foo();
+      var obj2 = new Bar();
+      console.log(obj1);
+      console.log(obj2);
+      obj2.showName();
+      obj2.showAge();
+    </script>
+  </body>
+</html>
